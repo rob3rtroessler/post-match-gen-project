@@ -1,0 +1,236 @@
+
+/*
+    GRID COLORS
+*/
+
+/* colors
+
+ dfc27d #yellowish
+            .style('fill', '#35978f')
+            .style('stroke', '#01665e')
+
+ */
+
+
+/* background color */
+.color-0 {
+    background: rgb(205, 204, 204);
+}
+
+/* header color */
+.color-1 {
+    /*background: rgba(211,211,211,0.49);*/
+    background: #35978f;
+}
+
+/* box color */
+.color-2 {
+    background: rgb(229, 229, 229);
+}
+
+.box {
+    -webkit-box-shadow: 0 10px 6px -6px #777;
+    -moz-box-shadow: 0 10px 6px -6px #777;
+    box-shadow: 0 10px 6px -6px #777;
+}
+
+/*TABS*/
+#explore-tab {
+    height: 100%;
+    background: rgba(53, 151, 143, 0.6);
+
+    border-radius: 5px 0px 0px 5px;
+    border-left: thin solid rgba(1, 102, 94, 0.6);
+    border-top: thin solid rgba(1, 102, 94, 0.6);
+    border-right: thin solid rgba(1, 102, 94, 0.6);
+    border-bottom: thin solid rgba(1, 102, 94, 0.6);
+
+    font-family: "Rock Salt";
+    font-size: 1.75vh;
+    font-style: normal;
+    font-variant: normal;
+    font-weight: 400;
+}
+
+#explore-tab:hover {
+    height: 100%;
+    background: rgba(53, 151, 143, 1);
+    border-radius: 5px 0px 0px 5px;
+    cursor: pointer;
+}
+
+#explore-tab.active-tab{
+    background: rgba(53, 151, 143, 0.85);
+    border-left: thin solid #01665e;
+    border-top: thin solid #01665e;
+    border-right: thin solid #01665e;
+    border-bottom: thin solid #01665e;
+}
+
+#explore-tab.active-tab:hover{
+    font-weight: 700;
+    letter-spacing: 1.5px;
+}
+
+
+#gen-tab {
+    height: 100%;
+    background: rgba(223,194,125,0.6);
+
+    border-radius: 0px 5px 5px 0px;
+    border-left: thin solid rgba(140, 81, 10, 0.6);
+    border-top: thin solid rgba(140, 81, 10, 0.6);
+    border-right: thin solid rgba(140, 81, 10, 0.6);
+    border-bottom: thin solid rgba(140, 81, 10, 0.6);
+
+    font-family: "Rock Salt";
+    font-size: 1.75vh;
+    font-style: normal;
+    font-variant: normal;
+    font-weight: 400;
+}
+
+#gen-tab:hover {
+    height: 100%;
+    background: rgba(223,194,125,1);
+    cursor: pointer;
+
+    border-left: thin solid #8c510a;
+    border-top: thin solid #8c510a;
+    border-right: thin solid #8c510a;
+    border-bottom: thin solid #8c510a;
+
+    font-weight: 700;
+    letter-spacing: 1.5px;
+}
+
+
+#gen-tab.active-tab{
+    background: rgba(223,194,125,1);
+    border-left: thin solid #8c510a;
+    border-top: thin solid #8c510a;
+    border-right: thin solid #8c510a;
+    border-bottom: thin solid #8c510a;
+}
+
+#gen-tab.active-tab:hover{
+    font-weight: 700;
+    letter-spacing: 1.5px;
+}
+
+
+#explore-gen-tab-wrapper {
+    height: 15%;
+    padding-left: 1vw;
+    padding-bottom: 0.5vh;
+    padding-right: 0.5vw;
+    padding-top: 1vh
+}
+
+#explore-generator-wrapper {
+    height: 85%;
+    padding-left: 1vw;
+    padding-right: 0.5vw;
+    padding-top: 0.5vh;
+    padding-bottom: 1vh;
+}
+
+
+#distribution-wrapper {
+    height: 100%;
+    padding-left: 0.5vw;
+    padding-bottom: 1vh;
+    padding-right: 0.5vw;
+    padding-top: 1vh
+}
+
+
+
+#mf-wrapper {
+    height: 100%;
+    padding-left: 0.5vw;
+    padding-bottom: 1vh;
+    padding-right: 1vw;
+    padding-top: 1vh
+}
+
+/*
+ *  STYLE 2
+ */
+
+#style-2::-webkit-scrollbar-track
+{
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+    border-radius: 8px;
+    background-color: #F5F5F5;
+}
+
+#style-2::-webkit-scrollbar
+{
+    width: 8px;
+    background-color: rgba(64,64,64,0.4);;
+}
+
+#style-2::-webkit-scrollbar-thumb
+{
+    border-radius: 8px;
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+    background-color: #35978f;
+}
+
+
+
+#twitter-logo-parent{
+    background: url("../img/twitter-logo.png");
+    /*background: url("https://static01.nyt.com/images/2014/08/10/magazine/10wmt/10wmt-articleLarge-v4.jpg?quality=75&auto=webp&disable=upscale");*/
+    background-size: 8vh;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+#twitter-logo-parent:hover {
+    backdrop-filter: blur();
+    border: thin solid black;
+}
+
+#twitter-icon-right{
+    display: block;
+    max-height:80%;
+    width: auto;
+    height: auto;
+}
+
+#twitter-icon-right:hover{
+    filter: invert(100%);
+    -webkit-filter: invert(100%);
+    cursor: pointer;
+}
+
+.info-png {
+    filter: opacity(80%);
+    max-height:60%;
+    width: auto;
+    height: auto;
+}
+
+.info-png:hover {
+    filter: invert(100%);
+    -webkit-filter: invert(100%);
+    cursor: pointer;
+}
+
+/* The sidepanel menu */
+.sidepanel {
+    height: 250px; /* Specify a height */
+    width: 0; /* 0 width - change this with JavaScript */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Stay on top */
+    top: 0;
+    background-image: linear-gradient(#35978f, rgba(53, 151, 143, 0.6));
+    overflow-x: hidden; /* Disable horizontal scroll */
+    transition: 0.5s; /* 0.5 second transition effect to slide in the sidepanel */
+}
+
+.feed_box::-webkit-scrollbar {
+    display: none;
+}

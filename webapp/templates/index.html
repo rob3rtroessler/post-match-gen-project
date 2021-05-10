@@ -1,0 +1,914 @@
+<html>
+    <head>
+        <title>Post Match Predictor</title>
+        <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+
+        <!-- google font -->
+        <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:300,400,500,700" type="text/css">
+        <link href="https://fonts.googleapis.com/css?family=Libre+Franklin:200,200i,300,300i,400,400i,500,500i" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Rock+Salt"/>
+
+        <!-- libs-->
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/libs/bootstrap.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/libs/nouislider.css') }}">
+
+        <!-- own styles -->
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/grid.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/fonts.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/sliders.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/buttons-and-switches.css') }}">
+
+    </head>
+
+
+    <body>
+        <!-- Wrapper for entire App -->
+        <div class="container-fluid" id="app" style="padding: 1vh; height: 100vh;">
+
+            <div class="container-fluid color-0" style="border: thin solid black; border-radius: 5px;">
+
+                <!-- SIDEPANEL -->
+<!--                https://www.w3schools.com/howto/howto_js_collapse_sidepanel.asp-->
+                <div id="mySidepanel" class="sidepanel"
+                        style="z-index: 1; position: absolute; width: 20vw; height:49vh; left: 75vw; top: 11vh; margin-left: 4px;
+                        border-left: thin solid #215f5b; border-right: thin solid #215f5b; border-bottom: thin solid #215f5b;">
+                    <div class="container-fluid" style="height: 100%; width: 100%;">
+                        <div class="row justify-content-center" style="height: 10%; border-bottom: thin solid black">
+                            <span class="align-self-center" style="text-align: center; font-size: 0.85em; font-weight: 700;">
+                                Recent Predictions
+                            </span>
+                        </div>
+                        <div class="row feed_box" style="height: 90%; overflow-y: scroll">
+                            <div class="col" id="feed-parent">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- HEADING -->
+                <div class="row" id="app-heading" style="height: 10vh; padding-left: 0.5vw; padding-bottom: 0.25vh; padding-right: 0.5vw; padding-top: 1vh">
+                    <div class="col color-1 box" style="border: thin solid #215f5b; border-radius: 5px;">
+                        <div class="row" style="height: 100%">
+                            <div class="col-3">
+                                <div class="row justify-content-center" style="height: 100%;">
+<!--                                    <img class="align-self-center" id="twitter-icon" src="{{ url_for('static', filename='img/logo.png') }}" style="display: block; max-height:80%; width: auto; height: auto;">-->
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="row justify-content-center" style="height: 100%">
+                                    <div class="align-self-center">
+                                        <h1 style="text-align: center">Post Match Interview Generator</h1>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-3">
+                                <div class="row justify-content-center" style="height: 100%;">
+                                    <img class="align-self-center" id="twitter-icon-right" src="{{ url_for('static', filename='img/twitter-logo.png') }}" onclick="trigger_twitter_button()">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- BODY -->
+                <div class="row" id="app-body" style="height: 57vh;">
+
+                    <!-- FILTERS -->
+                    <div class="col-4">
+
+                        <!-- SELECTION TABS -->
+                        <div class="row" id="explore-gen-tab-wrapper">
+                            <div class="col box">
+                                <div class="row" style="height: 100%">
+                                    <div class="col-6">
+                                        <div class="row justify-content-center active-tab" id="explore-tab" onclick="explore()">
+                                            <span class="align-self-center" style="text-align: center">explore</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="row justify-content-center" id="gen-tab" style="height: 100%;" onclick="generate()">
+                                            <span class="align-self-center" style="text-align: center">generate</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- EXPLORER & GENERATOR WRAPPER -->
+                        <div class="row" id="explore-generator-wrapper">
+                            <div class="col box">
+
+                                <!-- EXPLORER & GENERATOR CAROUSEL -->
+                                <div class="row" style="height: 100%">
+                                    <div id="explore-and-generate-carousel" class="carousel slide" data-ride="carousel" style="height: 100%; width: 100%; padding: 0; margin: 0">
+                                        <div class="carousel-inner row" style="height: 100%; width: 100%; background: transparent; padding: 0; margin: 0">
+
+                                            <!-- EXPLORER -->
+                                            <div class="carousel-item active" style="height: 100%; width: 100%">
+                                                <!-- wrapper -->
+                                                <div class="col">
+                                                    <div class="row color-2" style="height: 100%; border: thin solid grey; border-radius: 5px">
+                                                        <!-- all sliders -->
+                                                        <div class="col">
+
+                                                            <!-- Heading -->
+                                                            <div class="row" style="height: 10%">
+                                                                <div class="col-6">
+                                                                    <div class="row justify-content-center" style="height: 100%">
+                                                                        <span class="align-self-center" style="text-align: center">Home Team</span>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-6">
+                                                                    <div class="row justify-content-center" style="height: 100%">
+                                                                        <span class="align-self-center" style="text-align: center">Away Team</span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            <!-- goals slider row -->
+                                                            <div class="row" style="height: 10%;">
+                                                                <div class="col-1">
+                                                                    <div class="row justify-content-center" style="height: 100%">
+                                                                        <span class="align-self-center info-text" id="home-goals-span">0-10</span>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-4">
+                                                                    <div class="row justify-content-center" style="height: 100%">
+                                                                        <div class="align-self-center">
+                                                                            <div id="home-goals-slider" style="height: 1vh;"></div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-2" style="font-size: 2vh">
+                                                                    <div class="row justify-content-center" style="height: 100%">
+                                                                        <div class="align-self-center info-text-center">goals</div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-4">
+                                                                    <div class="row justify-content-center" style="height: 100%">
+                                                                        <div class="align-self-center">
+                                                                            <div id="away-goals-slider" style="height: 1vh;"></div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-1">
+                                                                    <div class="row justify-content-center" style="height: 100%">
+                                                                        <span class="align-self-center info-text" id="away-goals-span">0-10</span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            <!-- shots slider row -->
+                                                            <div class="row" style="height: 10%;">
+                                                                <div class="col-1">
+                                                                    <div class="row justify-content-center" style="height: 100%">
+                                                                        <span class="align-self-center info-text" id="home-shots-span">0-40</span>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-4">
+                                                                    <div class="row justify-content-center" style="height: 100%">
+                                                                        <div class="align-self-center">
+                                                                            <div id="home-shots-slider" style="height: 1vh;"></div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-2" style="font-size: 2vh">
+                                                                    <div class="row justify-content-center" style="height: 100%">
+                                                                        <div class="align-self-center info-text-center">shots</div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-4">
+                                                                    <div class="row justify-content-center" style="height: 100%">
+                                                                        <div class="align-self-center">
+                                                                            <div id="away-shots-slider" style="height: 1vh;"></div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-1">
+                                                                    <div class="row justify-content-center" style="height: 100%">
+                                                                        <span class="align-self-center info-text" id="away-shots-span">0-40</span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            <!-- total passes row-->
+                                                            <div class="row" style="height: 10%;">
+                                                                <div class="col-1">
+                                                                    <div class="row justify-content-center" style="height: 100%">
+                                                                        <span class="align-self-center info-text" id="home-passes-span">0-1000</span>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-4">
+                                                                    <div class="row justify-content-center" style="height: 100%">
+                                                                        <div class="align-self-center">
+                                                                            <div id="home-passes-slider" style="height: 1vh;"></div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-2" style="font-size: 2vh">
+                                                                    <div class="row justify-content-center" style="height: 100%">
+                                                                        <div class="align-self-center info-text-center">total passes</div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-4">
+                                                                    <div class="row justify-content-center" style="height: 100%">
+                                                                        <div class="align-self-center">
+                                                                            <div id="away-passes-slider" style="height: 1vh;"></div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-1">
+                                                                    <div class="row justify-content-center" style="height: 100%">
+                                                                        <span class="align-self-center info-text" id="away-passes-span">0-1000</span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            <!-- misplaced passes row-->
+                                                            <div class="row" style="height: 10%;">
+                                                                <div class="col-1">
+                                                                    <div class="row justify-content-center" style="height: 100%">
+                                                                        <span class="align-self-center info-text" id="home-misplaced-passes-span">0-200</span>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-4">
+                                                                    <div class="row justify-content-center" style="height: 100%">
+                                                                        <div class="align-self-center">
+                                                                            <div id="home-misplaced_passes-slider" style="height: 1vh;"></div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-2" style="font-size: 2vh">
+                                                                    <div class="row justify-content-center" style="height: 100%">
+                                                                        <div class="align-self-center info-text-center">misplaced passes</div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-4">
+                                                                    <div class="row justify-content-center" style="height: 100%">
+                                                                        <div class="align-self-center">
+                                                                            <div id="away-misplaced_passes-slider" style="height: 1vh;"></div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-1">
+                                                                    <div class="row justify-content-center" style="height: 100%">
+                                                                        <span class="align-self-center info-text" id="away-misplaced-passes-span">0-200</span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            <!-- pass accuracy row-->
+                                                            <div class="row" style="height: 10%;">
+                                                                <div class="col-1">
+                                                                    <div class="row justify-content-center" style="height: 100%">
+                                                                        <span class="align-self-center info-text" id="home-pass-acc-span">0-100</span>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-4">
+                                                                    <div class="row justify-content-center" style="height: 100%">
+                                                                        <div class="align-self-center">
+                                                                            <div id="home-pass-acc-slider" style="height: 1vh;"></div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-2" style="font-size: 2vh">
+                                                                    <div class="row justify-content-center" style="height: 100%">
+                                                                        <div class="align-self-center info-text-center">pass accuracy (%)</div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-4">
+                                                                    <div class="row justify-content-center" style="height: 100%">
+                                                                        <div class="align-self-center">
+                                                                            <div id="away-pass-acc-slider" style="height: 1vh;"></div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-1">
+                                                                    <div class="row justify-content-center" style="height: 100%">
+                                                                        <span class="align-self-center info-text" id="away-pass-acc-span">0-100</span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            <!-- distance covered row-->
+                                                            <div class="row" style="height: 15%;">
+                                                                <div class="col-1">
+                                                                    <div class="row" style="height: 100%">
+                                                                        <span class="info-text" id="home-distance-span">90-130</span>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-4">
+                                                                    <div class="row justify-content-center" style="height: 100%">
+                                                                        <div class="align-self-center">
+                                                                            <div id="home-distance-slider" style="height: 1vh;"></div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-2" style="font-size: 2vh">
+                                                                    <div class="row justify-content-center" style="height: 100%">
+                                                                        <div class="align-self-center info-text-center">distance covered (km)</div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-4">
+                                                                    <div class="row justify-content-center" style="height: 100%">
+                                                                        <div class="align-self-center">
+                                                                            <div id="away-distance-slider" style="height: 1vh;"></div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-1">
+                                                                    <div class="row justify-content-center" style="height: 100%">
+                                                                        <span class= "align-self-center info-text" id="away-distance-span">90-130</span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            <!-- button row -->
+                                                            <div class="row justify-content-center" style="height: 25%">
+                                                                <button class="btn align-self-center" style="height: 50px; width: 200px; background: #35978f; border: thin solid #01665e" onclick="explore()">filter & explore</button>
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
+                                            <!-- GENERATOR -->
+                                            <div class="carousel-item" style="height: 100%; width: 100%">
+                                                <!--wrapper-->
+                                                <div class="col">
+                                                    <div class="row color-2" style="height: 100%; border: thin solid grey; border-radius: 5px">
+
+                                                        <!-- all generator sliders -->
+                                                        <div class="col">
+
+                                                            <!-- Heading -->
+                                                            <div class="row" style="height: 10%">
+                                                                <div class="col-6">
+                                                                    <div class="row justify-content-center" style="height: 100%">
+                                                                        <span class="align-self-center" style="text-align: center">Home Team</span>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-6">
+                                                                    <div class="row justify-content-center" style="height: 100%">
+                                                                        <span class="align-self-center" style="text-align: center">Away Team</span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            <!-- goals slider row -->
+                                                            <div class="row" style="height: 8%;">
+                                                                <div class="col-1">
+                                                                    <div class="row justify-content-center" style="height: 100%">
+                                                                        <span class="align-self-center info-text-gen anchor-right" id="home-goals-gen-span"></span>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-4">
+                                                                    <div class="row justify-content-center" style="height: 100%">
+                                                                        <div class="align-self-center">
+                                                                            <div class="gen-slider-container" id="home-goals-gen-slider" style="height: 1vh;"></div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-2" style="font-size: 2vh">
+                                                                    <div class="row justify-content-center" style="height: 100%">
+                                                                        <div class="align-self-center info-text-center">goals</div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-4">
+                                                                    <div class="row justify-content-center" style="height: 100%">
+                                                                        <div class="align-self-center">
+                                                                            <div class="gen-slider-container" id="away-goals-gen-slider" style="height: 1vh;"></div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-1">
+                                                                    <div class="row justify-content-center" style="height: 100%">
+                                                                        <span class="align-self-center info-text-gen  anchor-left" id="away-goals-gen-span"></span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            <!-- shots slider row -->
+                                                            <div class="row" style="height: 8%;">
+                                                                <div class="col-1">
+                                                                    <div class="row justify-content-center" style="height: 100%">
+                                                                        <span class="align-self-center info-text-gen anchor-right" id="home-shots-gen-span"></span>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-4">
+                                                                    <div class="row justify-content-center" style="height: 100%">
+                                                                        <div class="align-self-center">
+                                                                            <div class="gen-slider-container" id="home-shots-gen-slider" style="height: 1vh;"></div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-2" style="font-size: 2vh">
+                                                                    <div class="row justify-content-center" style="height: 100%">
+                                                                        <div class="align-self-center info-text-center">shots</div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-4">
+                                                                    <div class="row justify-content-center" style="height: 100%">
+                                                                        <div class="align-self-center">
+                                                                            <div class="gen-slider-container" id="away-shots-gen-slider" style="height: 1vh;"></div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-1">
+                                                                    <div class="row justify-content-center" style="height: 100%">
+                                                                        <span class="align-self-center info-text-gen anchor-left" id="away-shots-gen-span"></span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            <!-- total passes row-->
+                                                            <div class="row" style="height: 8%;">
+                                                                <div class="col-1">
+                                                                    <div class="row justify-content-center" style="height: 100%">
+                                                                        <span class="align-self-center info-text-gen" id="home-passes-gen-span"></span>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-4">
+                                                                    <div class="row justify-content-center" style="height: 100%">
+                                                                        <div class="align-self-center">
+                                                                            <div class="gen-slider-container" id="home-passes-gen-slider" style="height: 1vh;"></div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-2" style="font-size: 2vh">
+                                                                    <div class="row justify-content-center" style="height: 100%">
+                                                                        <div class="align-self-center info-text-center">total passes</div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-4">
+                                                                    <div class="row justify-content-center" style="height: 100%">
+                                                                        <div class="align-self-center">
+                                                                            <div class="gen-slider-container" id="away-passes-gen-slider" style="height: 1vh;"></div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-1">
+                                                                    <div class="row justify-content-center" style="height: 100%">
+                                                                        <span class="align-self-center info-text-gen" id="away-passes-gen-span"></span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            <!-- misplaced passes row-->
+                                                            <div class="row" style="height: 8%;">
+                                                                <div class="col-1">
+                                                                    <div class="row justify-content-center" style="height: 100%">
+                                                                        <span class="align-self-center info-text-gen" id="home-misplaced-passes-gen-span"></span>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-4">
+                                                                    <div class="row justify-content-center" style="height: 100%">
+                                                                        <div class="align-self-center">
+                                                                            <div class="gen-slider-container" id="home-misplaced_passes-gen-slider" style="height: 1vh;"></div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-2" style="font-size: 2vh">
+                                                                    <div class="row justify-content-center" style="height: 100%">
+                                                                        <div class="align-self-center info-text-center">misplaced passes</div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-4">
+                                                                    <div class="row justify-content-center" style="height: 100%">
+                                                                        <div class="align-self-center">
+                                                                            <div class="gen-slider-container" id="away-misplaced_passes-gen-slider" style="height: 1vh;"></div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-1">
+                                                                    <div class="row justify-content-center" style="height: 100%">
+                                                                        <span class="align-self-center info-text-gen" id="away-misplaced-passes-gen-span"></span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            <!-- pass accuracy row-->
+                                                            <div class="row" style="height: 8%;">
+                                                                <div class="col-1">
+                                                                    <div class="row justify-content-center" style="height: 100%">
+                                                                        <span class="align-self-center info-text-gen" id="home-pass-acc-gen-span"></span>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-4">
+                                                                    <div class="row justify-content-center" style="height: 100%">
+                                                                        <div class="align-self-center">
+                                                                            <div class="gen-slider-container" id="home-pass-acc-gen-slider" style="height: 1vh;"></div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-2" style="font-size: 2vh">
+                                                                    <div class="row justify-content-center" style="height: 100%">
+                                                                        <div class="align-self-center info-text-center">pass accuracy (%)</div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-4">
+                                                                    <div class="row justify-content-center" style="height: 100%">
+                                                                        <div class="align-self-center">
+                                                                            <div class="gen-slider-container" id="away-pass-acc-gen-slider" style="height: 1vh;"></div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-1">
+                                                                    <div class="row justify-content-center" style="height: 100%">
+                                                                        <span class="align-self-center info-text-gen" id="away-pass-acc-gen-span"></span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            <!-- distance covered row-->
+                                                            <div class="row" style="height: 8%;">
+                                                                <div class="col-1">
+                                                                    <div class="row" style="height: 100%">
+                                                                        <span class="info-text-gen" id="home-distance-gen-span"></span>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-4">
+                                                                    <div class="row justify-content-center" style="height: 100%">
+                                                                        <div class="align-self-center">
+                                                                            <div class="gen-slider-container" id="home-distance-gen-slider" style="height: 1vh;"></div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-2" style="font-size: 2vh">
+                                                                    <div class="row justify-content-center" style="height: 100%">
+                                                                        <div class="align-self-center info-text-center">distance covered (km)</div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-4">
+                                                                    <div class="row justify-content-center" style="height: 100%">
+                                                                        <div class="align-self-center">
+                                                                            <div class="gen-slider-container" id="away-distance-gen-slider" style="height: 1vh;"></div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-1">
+                                                                    <div class="row justify-content-center" style="height: 100%">
+                                                                        <span class= "align-self-center info-text-gen" id="away-distance-gen-span"></span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="row" style="height: 35%; margin-top: 1vh">
+                                                                <div class="col-8 offset-2">
+
+                                                                    <div class="row" style="height: 100%; border: thin solid grey; background: rgba(128,128,128,0.47); border-radius: 5px; padding: 0.5vw">
+                                                                        <div class="col">
+                                                                            <div class="row" style="height: 50%">
+
+                                                                                <!-- sentiment -->
+                                                                                <div class="col-6 offset-3">
+                                                                                    <div class="row justify-content-center" style="height: 50%">
+                                                                                        <span class="align-self-center" style="text-align: center; font-size: 0.9em">sentiment</span>
+                                                                                    </div>
+                                                                                    <div class="row justify-content-center" style="height: 50%">
+                                                                                        <div class="gen-slider-container align-self-center" id="sentiment-slider" style="height: 1vh;"></div>
+                                                                                    </div>
+                                                                                </div>
+
+                                                                                <!--model-->
+<!--                                                                                <div class="col-6">-->
+<!--                                                                                    <div class="row" style="height: 50%">-->
+<!--                                                                                        <div class="col-6">-->
+<!--                                                                                            <div class="row justify-content-center" style="height: 100%">-->
+<!--                                                                                                <span class="align-self-center" style="text-align: center; font-size: 0.5em">naive model</span>-->
+<!--                                                                                            </div>-->
+<!--                                                                                        </div>-->
+<!--                                                                                        <div class="col-6">-->
+<!--                                                                                            <div class="row justify-content-center" style="height: 100%">-->
+<!--                                                                                                <span class="align-self-center" style="text-align: center; font-size: 0.5em">conditional model</span>-->
+<!--                                                                                            </div>-->
+<!--                                                                                        </div>-->
+<!--                                                                                    </div>-->
+<!--                                                                                    <div class="row justify-content-center" style="height: 50%">-->
+<!--                                                                                        <div class="col-6">-->
+<!--                                                                                            <div class="row justify-content-center">-->
+<!--                                                                                                <input class="align-self-center" type="radio" id="radio_model_naive" name="model" value="model_naive">-->
+<!--                                                                                            </div>-->
+<!--                                                                                        </div>-->
+<!--                                                                                        <div class="col-6">-->
+<!--                                                                                            <div class="row justify-content-center">-->
+<!--                                                                                                <input class="align-self-center" type="radio" id="radio_model_conditional" name="model" value="model_conditional">-->
+<!--                                                                                            </div>-->
+<!--                                                                                        </div>-->
+<!--                                                                                    </div>-->
+<!--                                                                                </div>-->
+                                                                            </div>
+
+                                                                            <!-- button -->
+                                                                            <div class="row" style="height: 33%">
+                                                                                <div class="col-6">
+                                                                                    <div class="row justify-content-center" style="height: 100%">
+                                                                                        <button class="btn align-self-center" style="height: 100%; width: 80%; font-size:0.7em; background: #dfc27d; border: thin solid #8c510a" onclick="pick_random_gen_values()">pick random</button>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="col-6">
+                                                                                    <div class="row justify-content-center" style="height: 100%">
+                                                                                        <button class="btn align-self-center" style="height: 100%; width: 80%; font-size:0.7em; background: #dfc27d; border: thin solid #8c510a" onclick="generate_prediction()">generate</button>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+
+<!--                                                                            <div class="row justify-content-center" style="height: 33%">-->
+<!--                                                                                <button class="btn align-self-center" style="height: 100%; width: 55%; background: #dfc27d; border: thin solid #8c510a" onclick="generate()">generate statement</button>-->
+<!--                                                                            </div>-->
+
+                                                                            <div class="row justify-content-center" style="height: 17%">
+                                                                                <button class="btn align-self-center" style="height: 80%; width: 20%; margin-top: 10px; padding-top: 2px; background: #d9d9d9; border: thin solid #888888; font-size: 0.5em" onclick="reset_generator()">reset</button>
+                                                                            </div>
+
+                                                                        </div>
+                                                                    </div>
+
+                                                                </div>
+                                                            </div>
+
+
+
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- DISTRIBUTION -->
+                    <div class="col-4">
+                        <div class="row" id="distribution-wrapper">
+                            <div class="col color-2 box" style="border: thin solid grey; border-radius: 5px;">
+
+                                <!-- distribution vis toolbar -->
+                                <div class="row" style="height: 10%;">
+                                    <div class="col-6 offset-3">
+                                        <div class="row justify-content-center" style="height: 100%">
+                                            <h2 class="align-self-center">Filtered Matches</h2>
+                                        </div>
+                                    </div>
+                                    <div class="col-3">
+                                        <div style="position: absolute; height: 7vh; width: 6.5vw;">
+                                            <div style="height: 50%; margin-top: 1vh">
+                                                <select id="x-axis-selection" style="width: 100%; border-radius: 5px 5px 0px 0px; background: rgba(53, 151, 143, 0.3); font-size: 0.7em">
+                                                    <option value="shots_diff" selected>x-axis</option>
+                                                    <option value="goals_diff">goals (difference, total)</option>
+                                                    <option value="shots_diff">shots (difference, total)</option>
+                                                    <option value="accuracy_diff">pass accuracy (difference, %)</option>
+                                                    <option value="distance_diff">distance covered (difference, km)</option>
+                                                </select>
+                                            </div>
+                                            <div style="height: 50%">
+                                                <select id="y-axis-selection" style="width: 100%; border-radius: 0px 0px 5px 5px; background: rgba(53, 151, 143, 0.3); font-size: 0.7em">
+                                                    <option value="goals_diff" selected>y-axis</option>
+                                                    <option value="goals_diff">goals (difference, total)</option>
+                                                    <option value="shots_diff">shots (difference, total)</option>
+                                                    <option value="accuracy_diff">pass accuracy (difference, %)</option>
+                                                    <option value="distance_diff">distance covered (difference, km)</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- distribution vis container -->
+                                <div class="row" id="distributionVisContainer" style="height: 90%"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- MOST FREQUENT -->
+                    <div class="col-4">
+                        <div class="row" id="mf-wrapper">
+                            <div class="col color-2 box" style="border: thin solid grey; border-radius: 5px;">
+
+                                <!-- TOP WORDS VIS TOOLBAR -->
+                                <div class="row" style="height: 10%;">
+                                    <div class="col-3">
+                                        <div class="row justify-content-center" style="height: 50%">
+                                            <div id="sw-switch-container" class="form-check form-switch align-self-center" style="text-align: center">
+                                                <input type="checkbox" id="sw-switch" onchange="sw_switch_triggered()" checked>
+                                                <label for="sw-switch"></label>
+                                            </div>
+                                        </div>
+                                        <div class="row justify-content-center" style="height: 50%">
+                                            <span id="sw-switch-label" style="text-align: center; font-size: 0.6em">stop words included</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="row justify-content-center" style="height: 100%">
+                                            <h2 class="align-self-center">Most Frequent Words</h2>
+                                        </div>
+                                    </div>
+                                    <div class="col-3">
+                                        <div class="row justify-content-center" style="height: 100%; text-align: center">
+                                            <button class="align-self-center" style="font-size: 0.5em; width: 66%; text-align: center" onclick="show_token_difference()">compute difference</button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- TOP WORDS VIS PARENT CONTAINER -->
+                                <div class="row" style="height: 90%; border-top: thin solid grey; overflow-y: scroll;" id="style-2">
+                                    <div class="col">
+                                        <div class="row" style="height: 100%" id="topWordsVisContainer"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- OUTPUT -->
+                <div class="row" id="app-prediction" style="height: 30vh">
+                    <div class="col">
+
+
+                        <div id="outputCarousel" class="carousel slide" data-ride="carousel" style="height: 100%; width: 100%; padding: 0; margin: 0">
+                            <div class="carousel-inner" style="height: 100%; width: 100%; padding: 0; margin: 0">
+
+
+                                <!-- explorer -->
+                                <div class="carousel-item active" style="height: 100%; width: 100%">
+                                    <div class="col">
+                                        <div class="row" id="output-row" style="padding-left: 1vw; padding-right: 1vw;">
+
+                                            <!-- option 1 -->
+                                            <div class="col">
+                                                <div class="row box" style="height: 29vh; border: thin solid grey; background: #ececec; padding: 5px; border-radius: 5px">
+
+                                                    <div class="col-2 offset-1">
+                                                        <div class="row" style="height: 100%; padding: 2vw 2vw 2vw 2vw;">
+                                                            <div class="col" style="background: rgba(53,151,143,0.75); border: thin solid #01665e; border-radius: 5px;">
+                                                                <div class="row justify-content-center" style="height: 66%;">
+                                                                    <img class="align-self-center" src="{{ url_for('static', filename='img/explore.png') }}" style="display: block; max-height:80%; width: auto; height: auto;">
+                                                                </div>
+                                                                <div class="row justify-content-center" style="height: 34%">
+                                                                    <span class="align-self-center structure-text" style="text-align: center;">explore data</span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-2">
+                                                        <div class="row" style="height: 100%; padding: 2vw 2vw 2vw 2vw;">
+                                                            <div class="col">
+                                                                <div class="row justify-content-center" style="height: 100%;">
+                                                                    <img class="align-self-center" src="{{ url_for('static', filename='img/arrow-right.png') }}" style="display: block; max-height:80%; width: auto; height: auto;">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-2">
+                                                        <div class="row" style="height: 100%; padding: 2vw 2vw 2vw 2vw;">
+                                                            <div class="col" style="background: rgba(223,194,125,0.75); border: thin solid #8c510a; border-radius: 5px;">
+                                                                <div class="row justify-content-center" style="height: 66%;">
+                                                                    <img class="align-self-center" src="{{ url_for('static', filename='img/logo.png') }}" style="display: block; max-height:80%; width: auto; height: auto;">
+                                                                </div>
+                                                                <div class="row justify-content-center" style="height: 34%">
+                                                                    <span class="align-self-center structure-text" style="text-align: center;">generate interview</span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-2">
+                                                        <div class="row" style="height: 100%; padding: 2vw 2vw 2vw 2vw;">
+                                                            <div class="col">
+                                                                <div class="row justify-content-center" style="height: 100%;">
+                                                                    <img class="align-self-center" src="{{ url_for('static', filename='img/arrow-right.png') }}" style="display: block; max-height:80%; width: auto; height: auto;">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-2">
+                                                        <div class="row" style="height: 100%; padding: 2vw 2vw 2vw 2vw;">
+                                                            <div class="col" style="background: rgba(94,177,191,0.75); border: thin solid rgb(54,106,115); border-radius: 5px;">
+                                                                <div class="row justify-content-center" style="height: 66%;">
+                                                                    <img class="align-self-center" src="{{ url_for('static', filename='img/coach_3.png') }}" style="display: block; max-height:80%; width: auto; height: auto;">
+                                                                </div>
+                                                                <div class="row justify-content-center" style="height: 34%">
+                                                                    <span class="align-self-center structure-text" style="text-align: center;">examine interviews</span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- generator -->
+                                <div class="carousel-item">
+                                    <div class="col">
+                                        <div class="row" style="padding-left: 1vw; padding-right: 1vw;">
+                                            <div class="col" id="generator-output">
+
+                                                <div class="row box" style="height: 29vh; border: thin solid grey; background: #f6e8c3; padding: 5px; border-radius: 5px">
+                                                    <div class="col-4 offset-1">
+                                                        <div class="row" style="height: 25%"></div>
+                                                        <div class="row" style="height: 50%; border-radius: 5px; border: thin solid grey; background: rgba(255,255,255,0.7)">
+                                                            <div class="col-6">
+                                                                <div class="row justify-content-center" style="height: 100%">
+                                                                    <img class="align-self-center" src="{{ url_for('static', filename='img/slider.png') }}" style="display: block; max-height:100%; width: auto; height: auto;">
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-6">
+                                                                <div class="row justify-content-center" style="height: 100%">
+                                                                    <span class="align-self-center structure-text" style="text-align: center;">
+                                                                        Use the sliders and generate a custom interview
+                                                                    </span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-2">
+                                                        <div class="row justify-content-center" style="height: 100%">
+                                                            <span class="align-self-center structure-text" style="text-align: center;">
+                                                                or
+                                                            </span>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-4">
+                                                        <div class="row" style="height: 25%"></div>
+                                                        <div class="row" style="height: 50%; border-radius: 5px; border: thin solid grey; background: rgba(255,255,255,0.7)">
+                                                            <div class="col-6">
+                                                                <div class="row justify-content-center" style="height: 100%">
+                                                                    <img class="align-self-center" src="{{ url_for('static', filename='img/twitter-logo.png') }}" style="display: block; max-height:80%; width: auto; height: auto;">
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-6">
+                                                                <div class="row justify-content-center" style="height: 100%">
+                                                                    <span class="align-self-center structure-text" style="text-align: center;">
+                                                                        Pick from the most recent predictions that our twitter bot has generated
+                                                                    </span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
+        <!-- JAVASCRIPT LIBRARIES -->
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" crossorigin="anonymous"></script>
+        <script src="{{ url_for('static', filename='js/libs/bootstrap.min.js') }}"></script>
+
+        <!-- axios -->
+        <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+        <!-- nouislider -->
+        <script src="{{ url_for('static', filename='js/libs/nouislider.js') }}"></script>
+
+        <!-- wNumb -->
+        <script src="{{ url_for('static', filename='js/libs/wNumb.js') }}"></script>
+
+
+        <!-- adding d3.js, vis.js, and viz.js-->
+        <script src="https://d3js.org/d3.v6.min.js"></script>
+
+
+        <!-- OWN JAVASCRIPT FILES -->
+
+        <!-- MAIN -->
+        <script src="{{ url_for('static', filename='js/carousels.js') }}"></script>
+        <script src="{{ url_for('static', filename='js/helper.js') }}"></script>
+        <script src="{{ url_for('static', filename='js/sliders.js') }}"></script>
+        <script src="{{ url_for('static', filename='js/topwords-vis.js') }}"></script>
+        <script src="{{ url_for('static', filename='js/distribution-vis.js') }}"></script>
+        <script src="{{ url_for('static', filename='js/prediction-feed.js') }}"></script>
+        <script src="{{ url_for('static', filename='js/generator.js') }}"></script>
+        <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+
+    </body>
+</html>

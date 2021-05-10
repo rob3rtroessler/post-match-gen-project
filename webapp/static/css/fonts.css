@@ -1,0 +1,90 @@
+.coach-output {
+    font-size: 2.6vh;
+}
+
+h4 {
+    font-size: 1.4vh;
+}
+
+.home-text, .away-text {
+    font-size: 1.5vh;
+}
+
+
+h1 {
+    font-family: "Rock Salt";
+    font-size: 3vh;
+    font-style: normal;
+    font-variant: normal;
+    font-weight: 700;
+    line-height: 26.4px;
+}
+
+h2 {
+    font-family: "Rock Salt";
+    font-size: 2vh;
+    font-style: normal;
+    font-variant: normal;
+    font-weight: 700;
+    text-align: center;
+    line-height: 1.5vh;
+}
+
+h3 {
+    font-size: 1.5vh;
+    font-style: normal;
+    font-variant: normal;
+    font-weight: 400;
+    text-align: center;
+}
+
+h4 {
+    font-size: 1.2vh;
+    font-style: normal;
+    font-variant: normal;
+    font-weight: 600;
+    text-align: center;
+}
+
+h5 {
+    font-size: 1.2vh;
+    font-style: normal;
+    font-variant: normal;
+    font-weight: 400;
+    text-align: center;
+}
+
+
+p { font-family: "Rock Salt"; font-size: 14px; font-style: normal; font-variant: normal; font-weight: 400; line-height: 20px; }
+blockquote { font-family: "Rock Salt"; font-size: 21px; font-style: normal; font-variant: normal; font-weight: 400; line-height: 30px; }
+pre { font-family: "Rock Salt"; font-size: 13px; font-style: normal; font-variant: normal; font-weight: 400; line-height: 18.5714px; }
+
+.structure-text {
+    font-family: "Rock Salt";
+    font-size: 2vh;
+    font-style: normal;
+    font-variant: normal;
+    font-weight: 700;
+    line-height: 15.4px;
+}
+
+.info-text {
+    font-size: 0.9vh;
+}
+
+.info-text-center {
+    font-size: 1.3vh;
+    text-align: center
+}
+
+.info-text-gen {
+    font-size: 1.5vh;
+}
+
+.anchor-left {
+    text-anchor: start;
+}
+
+.anchor-right {
+    text-anchor: end;
+}

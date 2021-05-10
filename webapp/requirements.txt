@@ -1,0 +1,11 @@
+Flask
+Flask-JSON
+gunicorn
+jsonschema
+Werkzeug
+requests
+pandas
+bs4
+numpy
+apscheduler
+sklearn

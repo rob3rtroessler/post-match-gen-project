@@ -1,0 +1,68 @@
+/*.form-check-input:focus {*/
+/*    border-color: grey;!important*/
+/*outline: 0;*/
+/*    box-shadow: 0 0 0 0.01rem #43a097;!important*/
+/*}*/
+/*.form-check-input:checked {*/
+/*    background-color: #4dbeb4; !important*/
+/*    border-color: red; !important;*/
+/*}*/
+
+
+
+/*.form-check-input:checked[type=checkbox] {*/
+/*    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3e%3cpath fill='none' stroke='%23fff' stroke-linecap='round' stroke-linejoin='round' stroke-width='3' d='M6 10l3 3l6-6'/%3e%3c/svg%3e");*/
+/*}*/
+/*.form-check-input:checked[type=radio] {*/
+/*    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='2' fill='%23fff'/%3e%3c/svg%3e");*/
+/*}*/
+/*.form-check-input[type=checkbox]:indeterminate {*/
+/*    background-color: yellow;*/
+/*    border-color: green;*/
+/*    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3e%3cpath fill='none' stroke='%23fff' stroke-linecap='round' stroke-linejoin='round' stroke-width='3' d='M6 10h8'/%3e%3c/svg%3e");*/
+/*}*/
+
+
+
+#sw-switch-container input[type=checkbox]{
+    height: 0;
+    width: 0;
+    visibility: hidden;
+}
+
+#sw-switch-container label {
+    cursor: pointer;
+    width: 2vw;
+    height: 1.2vh;
+    background: grey;
+    display: block;
+    border-radius: 25px;
+    position: relative;
+    top: 1.5vh;
+}
+
+/*inner circle*/
+#sw-switch-container label:after {
+    content: '';
+    position: absolute;
+    top: 0.1vh;
+    left: 0.1vw;
+    width: 1.5vh;
+    height: 1vh;
+    background: #fff;
+    border-radius: 90px;
+    transition: 0.5s;
+}
+
+#sw-switch-container input:checked + label {
+    background: #43a097;
+}
+
+#sw-switch-container input:checked + label:after {
+    left: calc(100% - 1px);
+    transform: translateX(-100%);
+}
+
+#sw-switch-container label:active:after {
+    width: 0vw;
+}
